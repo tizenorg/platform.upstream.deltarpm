@@ -6,6 +6,7 @@ License:        BSD-3-Clause
 Group:          System/Packages
 Url:            ftp://ftp.suse.com/pub/projects/deltarpm
 Source:         deltarpm-3.5.git.tar.bz2
+Source1001: 	deltarpm.manifest
 BuildRequires:  bzip2-devel
 BuildRequires:  python-devel
 BuildRequires:  rpm-devel
@@ -30,6 +31,7 @@ Python bindings for deltarpm
 
 %prep
 %setup -q
+cp %{SOURCE1001} .
 
 %build
 make CC="gcc" CFLAGS="%{optflags}" rpmdumpheader="/usr/lib/rpm/rpmdumpheader" %{?_smp_mflags}
@@ -42,6 +44,7 @@ rm -rf %{buildroot}%{_libdir}/python/site-packages/{_deltarpmmodule.so,deltarpm.
 mv %{buildroot}%{python_sitearch}/_deltarpm{module,}.so # Fix binary Python module name
 
 %files
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %doc README LICENSE.BSD
 %{_bindir}/*
@@ -49,6 +52,7 @@ mv %{buildroot}%{python_sitearch}/_deltarpm{module,}.so # Fix binary Python modu
 %{_prefix}/lib/rpm/rpmdumpheader
 
 %files -n python-deltarpm
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %{python_sitearch}/deltarpm.py
 %{python_sitearch}/_deltarpm.so

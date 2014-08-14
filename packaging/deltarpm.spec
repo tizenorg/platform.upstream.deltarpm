@@ -41,7 +41,7 @@ make CC="gcc" CFLAGS="%{optflags}" rpmdumpheader="/usr/lib/rpm/rpmdumpheader" %{
 mkdir -p %{buildroot}%{_prefix}/lib/rpm
 make DESTDIR=%{buildroot} prefix="%{_prefix}" libdir="%{_libdir}" mandir="%{_mandir}" rpmdumpheader="/usr/lib/rpm/rpmdumpheader" install
 rm -rf %{buildroot}%{_libdir}/python/site-packages/{_deltarpmmodule.so,deltarpm.py} # Remove wrongly installed Python module
-mv %{buildroot}%{python_sitearch}/_deltarpm{module,}.so # Fix binary Python module name
+mv %{buildroot}%{_libdir}/python%{python_version}/site-packages/_deltarpm{module,}.so # Fix binary Python module name
 
 %files
 %manifest %{name}.manifest
@@ -54,7 +54,7 @@ mv %{buildroot}%{python_sitearch}/_deltarpm{module,}.so # Fix binary Python modu
 %files -n python-deltarpm
 %manifest %{name}.manifest
 %defattr(-,root,root)
-%{python_sitearch}/deltarpm.py
-%{python_sitearch}/_deltarpm.so
+%{_libdir}/python%{python_version}/site-packages/deltarpm.py
+%{_libdir}/python%{python_version}/site-packages/_deltarpm.so
 
 %changelog
